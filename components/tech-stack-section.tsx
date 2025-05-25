@@ -1,110 +1,131 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Database, Cloud, Cpu, Shield, Zap, Globe } from "lucide-react"
+import Image from "next/image"
+import { useRef, useEffect } from "react"
+
+const techLogos = [
+  { name: "Supabase", src: "/logos/supabase.svg" },
+  { name: "Vercel", src: "/logos/vercel.svg" },
+  { name: "LangChain", src: "/logos/langchain.svg" },
+  { name: "Make", src: "/logos/make.svg" },
+  { name: "n8n", src: "/logos/n8n.svg" },
+  { name: "Perplexity", src: "/logos/perplexity.svg" },
+  { name: "Google Gemini", src: "/logos/googlegemini.svg" },
+  { name: "Hugging Face", src: "/logos/huggingface.svg" },
+  { name: "Anthropic", src: "/logos/anthropic.svg" },
+  { name: "React", src: "/logos/react.svg" },
+  { name: "GitHub", src: "/logos/github.svg" },
+]
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
-}
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
+  visible: (custom: number) => ({
     opacity: 1,
+    y: 0,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      delay: custom * 0.1,
+      duration: 0.6,
+      ease: "easeOut",
     },
-  },
+  }),
 }
 
 export default function TechStackSection() {
-  const technologies = [
-    {
-      icon: <Cpu className="w-8 h-8" />,
-      title: "IA Avanzada",
-      description: "Modelos de lenguaje y machine learning personalizados para tu industria",
-      color: "from-blue-500/20 to-cyan-500/20",
-      borderColor: "border-blue-500/30"
-    },
-    {
-      icon: <Cloud className="w-8 h-8" />,
-      title: "Infraestructura Cloud",
-      description: "Escalabilidad automática con AWS, Google Cloud y Azure",
-      color: "from-purple-500/20 to-pink-500/20",
-      borderColor: "border-purple-500/30"
-    },
-    {
-      icon: <Database className="w-8 h-8" />,
-      title: "Integraciones",
-      description: "Conectamos con CRMs, ERPs y cualquier sistema existente",
-      color: "from-green-500/20 to-emerald-500/20",
-      borderColor: "border-green-500/30"
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Seguridad",
-      description: "Encriptación end-to-end y cumplimiento de normativas internacionales",
-      color: "from-red-500/20 to-orange-500/20",
-      borderColor: "border-red-500/30"
-    },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Automatización",
-      description: "Workflows inteligentes que se optimizan continuamente",
-      color: "from-yellow-500/20 to-amber-500/20",
-      borderColor: "border-yellow-500/30"
-    },
-    {
-      icon: <Globe className="w-8 h-8" />,
-      title: "Omnicanal",
-      description: "Unificamos WhatsApp, email, llamadas y redes sociales",
-      color: "from-indigo-500/20 to-violet-500/20",
-      borderColor: "border-indigo-500/30"
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current
+    if (!scrollContainer) return
+
+    let animationId: number
+    let scrollPosition = 0
+    const scrollSpeed = 0.2
+
+    const animate = () => {
+      scrollPosition += scrollSpeed
+      if (scrollPosition >= scrollContainer.scrollWidth / 2) {
+        scrollPosition = 0
+      }
+      scrollContainer.scrollLeft = scrollPosition
+      animationId = requestAnimationFrame(animate)
     }
-  ]
+
+    animationId = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
+    }
+  }, [])
 
   return (
-    <section className="bg-gnosix-black py-20 px-6">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          className="text-center mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Tecnología de <span className="text-gnosix-gold">Vanguardia</span>
-          </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            Utilizamos las mejores herramientas y frameworks para construir soluciones robustas y escalables
-          </p>
+    <section className="w-full py-16 px-6 bg-gradient-to-br from-black via-neutral-900 to-black text-white text-center overflow-hidden">
+      <div className="max-w-6xl mx-auto space-y-12">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-4">
+          <motion.h2 custom={0} variants={fadeInUp} className="text-3xl md:text-4xl font-bold">
+            Tecnología que potencia cada solución
+          </motion.h2>
+          <motion.p custom={0.2} variants={fadeInUp} className="text-lg text-neutral-400 max-w-3xl mx-auto">
+            Trabajamos con los frameworks más avanzados del mundo para construir tu infraestructura personalizada.
+          </motion.p>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={staggerContainer}
+          custom={0.4}
+          variants={fadeInUp}
+          className="relative"
         >
-          {technologies.map((tech, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              className={`group p-6 rounded-xl border ${tech.borderColor} bg-gradient-to-br ${tech.color} backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
-              whileHover={{ y: -5 }}
-            >
-              <div className="text-gnosix-gold mb-4 group-hover:scale-110 transition-transform duration-300">
-                {tech.icon}
-              </div>
-              <h3 className="text-xl font-bold text-white mb-3">{tech.title}</h3>
-              <p className="text-gray-300 leading-relaxed">{tech.description}</p>
-            </motion.div>
-          ))}
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+
+          {/* Scrolling container */}
+          <div
+            ref={scrollRef}
+            className="flex gap-10 overflow-x-hidden scrollbar-hide"
+            style={{ scrollBehavior: "auto" }}
+          >
+            {/* First set of logos */}
+            <div className="flex gap-10 flex-shrink-0">
+              {techLogos.map((logo, index) => (
+                <div
+                  key={`first-${index}`}
+                  className="w-24 h-24 bg-neutral-800 rounded-xl flex items-center justify-center border border-neutral-700 flex-shrink-0"
+                >
+                  <Image
+                    src={logo.src || "/placeholder.svg"}
+                    alt={logo.name}
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 object-contain filter brightness-90"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Duplicate set for seamless loop */}
+            <div className="flex gap-10 flex-shrink-0">
+              {techLogos.map((logo, index) => (
+                <div
+                  key={`second-${index}`}
+                  className="w-24 h-24 bg-neutral-800 rounded-xl flex items-center justify-center border border-neutral-700 flex-shrink-0"
+                >
+                  <Image
+                    src={logo.src || "/placeholder.svg"}
+                    alt={logo.name}
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 object-contain filter brightness-90"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

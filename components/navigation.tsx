@@ -73,10 +73,8 @@ export default function Navigation() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-24 lg:h-28">
           {/* Logo */}
-          <motion.div
+          <div
             className="flex-shrink-0 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <Image
@@ -84,10 +82,10 @@ export default function Navigation() {
               alt="GNOSIX"
               width={600}
               height={180}
-              className="h-24 w-auto lg:h-28 transition-all duration-300"
+              className="h-24 w-auto lg:h-28"
               priority
             />
-          </motion.div>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">

@@ -23,7 +23,7 @@ export default function Footer() {
               alt="GNOSIX"
               width={700}
               height={210}
-              className="h-28 w-auto md:h-32 transition-all duration-300"
+              className="h-28 w-auto md:h-32"
             />
           </div>
           <p className="text-neutral-400">
